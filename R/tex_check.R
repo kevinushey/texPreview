@@ -70,5 +70,7 @@ check_package <- function(x){
 
 check_texlive <- function(x) length(suppressWarnings(system(sprintf('kpsewhich %s.sty',x),intern = TRUE)))>0
 
-check_mpm <- function(x) length(shell(sprintf("mpm --list-package-names | grep %s",x),intern=TRUE))>0
-
+check_mpm <- function(x) {
+  exec <- if (Sys.info()[["sysname"]] == "Windows") shell else system
+  length(exec(sprintf("mpm --list-package-names | grep %s",x),intern=TRUE))>0
+}
